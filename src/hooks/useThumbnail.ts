@@ -8,7 +8,7 @@ const axiosInstance = axios.create({
         part: "snippet",
     },
 });
-
+type thumbnailTypes = "standard" | "maxres" | "default";
 interface Video {
     items:
     {
@@ -22,13 +22,13 @@ interface Video {
     }[];
 }
 
-interface UrlResource {
+interface ThumbnailResource {
     type: string;
     url: string;
 }
 
 const useThumbnail = () => {
-    const [thumbnailData, setUrl] = useState<UrlResource[]>([]);
+    const [thumbnailData, setUrl] = useState<ThumbnailResource[]>([]);
     const [isLoading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [selectedUrl, setSelectedUrl] = useState("");
@@ -40,7 +40,7 @@ const useThumbnail = () => {
                 id: id
             }
         }).then((res) => {
-            let urls: UrlResource[] = [];
+            let urls: ThumbnailResource[] = [];
             if (res.data.items[0]) {
                 const thumbnails = res.data.items[0].snippet.thumbnails;
                 for (const key in thumbnails) {

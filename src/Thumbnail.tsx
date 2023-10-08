@@ -84,7 +84,7 @@ const Thumbnail = () => {
             }
           />
         )}
-        {error && !isLoading && (
+        {!isLoading && error && (
           <p className="text-danger">No Thumbnail found.</p>
         )}
       </div>

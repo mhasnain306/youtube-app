@@ -1,11 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
 import Oauth2 from "./pages/Oauth2";
+import HomePage from "./pages/HomePage";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <HomePage />,
   },
   {
     path: "/oauth2",
