@@ -1,6 +1,6 @@
 import { FormEvent, useRef } from "react";
-import useThumbnail from "./hooks/useThumbnail";
-import getVideoId from "./services/getVideoId";
+import useThumbnail from "../hooks/useThumbnail";
+import getVideoId from "../services/getVideoId";
 
 const Thumbnail = () => {
   const {

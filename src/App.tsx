@@ -1,5 +1,5 @@
-import OauthButton from "./OauthButton";
-import Thumbnail from "./Thumbnail";
+import OauthButton from "./components/OauthButton";
+import Thumbnail from "./components/Thumbnail";
 
 function App() {
   return (
