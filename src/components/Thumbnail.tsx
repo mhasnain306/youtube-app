@@ -35,19 +35,22 @@ const Thumbnail = () => {
         className="rounded-3"
       >
         <h1 className="display-6 mb-3">Download Youtube Video Thumbnail</h1>
-        <form onSubmit={handleSubmit} className="mb-3">
+        <form onSubmit={handleSubmit} className="mb-3 d-flex">
           <input
             className="form-control"
             ref={userInputRef}
             type="text"
-            placeholder="Paste video URL and press enter"
+            placeholder="Paste video url"
             required
           />
+          <button type="submit" className="btn btn-primary ms-2">
+            Search
+          </button>
         </form>
         <div className="d-flex mb-3">
           <select
             defaultValue={"quality"}
-            className="form-select me-4"
+            className="me-4"
             onChange={(e) => setSelectedUrl(e.target.value)}
           >
             <option value="quality" disabled>

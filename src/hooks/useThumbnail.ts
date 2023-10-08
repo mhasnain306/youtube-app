@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 
-const axiosInstance = axios.create({
+export const axiosInstance = axios.create({
     baseURL: "https://www.googleapis.com/youtube/v3",
     params: {
         key: "AIzaSyAxGGRfdnUpozj052bPxMabHrIM4dHwgLA",
