@@ -1,5 +1,6 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import getVideoId from "../services/getVideoId";
 
 export const axiosInstance = axios.create({
     baseURL: "https://www.googleapis.com/youtube/v3",
@@ -8,7 +9,6 @@ export const axiosInstance = axios.create({
         part: "snippet",
     },
 });
-type thumbnailTypes = "standard" | "maxres" | "default";
 interface Video {
     items:
     {
@@ -27,31 +27,39 @@ interface ThumbnailResource {
     url: string;
 }
 
-const useThumbnail = () => {
-    const [thumbnailData, setUrl] = useState<ThumbnailResource[]>([]);
+const useThumbnail = (inputUrl: string) => {
+    const [thumbnailData, setThumbnailData] = useState<ThumbnailResource[]>([]);
     const [isLoading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [selectedUrl, setSelectedUrl] = useState("");
 
+    useEffect(() => {
+
+        const id = getVideoId(inputUrl);
+        if (id) fetchthumbnail(id);
+        else setError("Invalid URL");
+    }, [inputUrl]);
+
     const fetchthumbnail = (id: string) => {
+        setSelectedUrl("");
         setLoading(true);
         axiosInstance.get<Video>('/videos', {
             params: {
                 id: id
             }
         }).then((res) => {
-            let urls: ThumbnailResource[] = [];
+            let thumbnailUrls: ThumbnailResource[] = [];
             if (res.data.items[0]) {
                 const thumbnails = res.data.items[0].snippet.thumbnails;
                 for (const key in thumbnails) {
-                    urls.push({ type: key, url: thumbnails[key].url })
+                    thumbnailUrls.push({ type: key, url: thumbnails[key].url })
                 }
 
                 setError("")
             } else {
                 setError("No video found");
             }
-            setUrl(urls);
+            setThumbnailData(thumbnailUrls);
             setLoading(false);
         }).catch(err => {
             console.log(err);
@@ -63,10 +71,7 @@ const useThumbnail = () => {
     return {
         thumbnailData,
         isLoading,
-        fetchthumbnail,
-        setUrl,
         error,
-        setError,
         selectedUrl,
         setSelectedUrl
     };
