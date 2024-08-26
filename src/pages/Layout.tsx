@@ -9,13 +9,13 @@ const Layout = () => {
         base: `"nav" "main"`,
       }}
     >
-      <GridItem area={"nav"}>
-        <Box padding={5} bg={"lightgray"}>
+      <GridItem area={"nav"} padding={"10px 2.5rem"}>
+        <Box padding={5} bg={"#000000"} color={"#ffffff"}>
           <NavBar />
         </Box>
       </GridItem>
-      <GridItem area={"main"}>
-        <Box padding={5}>
+      <GridItem area={"main"} padding={"10px 2.5rem"}>
+        <Box>
           <Outlet />
         </Box>
       </GridItem>

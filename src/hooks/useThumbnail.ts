@@ -1,14 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import getVideoId from "../services/getVideoId";
+import HttpService from "../services/HttpService";
 
-export const axiosInstance = axios.create({
-    baseURL: "https://www.googleapis.com/youtube/v3",
-    params: {
-        key: "AIzaSyAxGGRfdnUpozj052bPxMabHrIM4dHwgLA",
-        part: "snippet",
-    },
-});
+
 interface Video {
     items:
     {
@@ -33,6 +28,8 @@ const useThumbnail = (inputUrl: string) => {
     const [error, setError] = useState("");
     const [selectedUrl, setSelectedUrl] = useState("");
 
+    const httpClient = new HttpService<Video>("/videos");
+
     useEffect(() => {
 
         const id = getVideoId(inputUrl);
@@ -43,11 +40,10 @@ const useThumbnail = (inputUrl: string) => {
     const fetchthumbnail = (id: string) => {
         setSelectedUrl("");
         setLoading(true);
-        axiosInstance.get<Video>('/videos', {
-            params: {
-                id: id
-            }
-        }).then((res) => {
+        const params = {
+            id: id
+        }
+        httpClient.get(params).then(res => {
             let thumbnailUrls: ThumbnailResource[] = [];
             if (res.data.items[0]) {
                 const thumbnails = res.data.items[0].snippet.thumbnails;

@@ -23,7 +23,9 @@ const Thumbnail = () => {
         }}
         className="rounded-3"
       >
-        <h1 className="display-6 mb-3">Download Youtube Video Thumbnail</h1>
+        <h1 className="display-6 mb-3">
+          Download Youtube Video Thumbnail
+        </h1>
         <form onSubmit={handleSubmit} className="mb-3 d-flex">
           <input
             className="form-control"
@@ -32,7 +34,7 @@ const Thumbnail = () => {
             placeholder="Paste video url"
             required
           />
-          <button type="submit" className="btn btn-primary ms-2">
+          <button type="submit" className="btn btn-dark ms-2">
             Search
           </button>
         </form>
