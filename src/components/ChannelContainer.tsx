@@ -12,8 +12,8 @@ const ChannelContainer = () => {
   return (
     <div>
       <ChannelForm
-        onSubmit={(channelHandle) => {
-          setRequestInputs(channelHandle);
+        onSubmit={(inputs) => {
+          setRequestInputs(inputs);
         }}
       />
 
