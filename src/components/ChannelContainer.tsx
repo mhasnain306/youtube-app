@@ -14,6 +14,11 @@ const ChannelContainer = () => {
       <ChannelForm
         onSubmit={(inputs) => {
           setRequestInputs(inputs);
+          if (
+            inputs.channelHandle !== requestInputs.channelHandle
+          ) {
+            setPlaylistId("");
+          }
         }}
       />
 

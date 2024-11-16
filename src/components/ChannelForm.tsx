@@ -20,18 +20,22 @@ const ChannelForm = ({ onSubmit }: Props) => {
       style={{
         display: "flex",
         justifyContent: "center",
-        padding: "20px", // Adds some padding around the form
-        backgroundColor: "#f8f8f8", // Light grey background to enhance contrast
+        padding: "10px",
+        backgroundColor: "#f8f8f8",
+        marginBottom: "10px",
       }}
     >
       <form
         style={{
-          maxWidth: "700px",
+          display: "flex",
+          alignItems: "center",
+          maxWidth: "800px",
           width: "100%",
           backgroundColor: "#fff",
-          padding: "20px",
+          padding: "10px",
           borderRadius: "8px",
-          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+          boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+          gap: "10px",
         }}
         onSubmit={(e) => {
           e.preventDefault();
@@ -47,81 +51,50 @@ const ChannelForm = ({ onSubmit }: Props) => {
           onSubmit(inputs);
         }}
       >
-        <div className="d-flex gap-3 mb-3">
-          <input
-            required
-            className="form-control"
-            type="text"
-            placeholder="YouTube Handle"
-            ref={handleRef}
-            style={{
-              border: "1px solid #000",
-              borderRadius: "4px",
-              padding: "10px",
-              flex: 1,
-            }}
-          />
-        </div>
-        <div className="d-flex gap-3 mb-3">
-          <div style={{ flex: 1 }}>
-            <label
-              className="form-label"
-              htmlFor="from"
-              style={{
-                display: "block",
-                marginBottom: "5px",
-                fontWeight: "bold",
-                color: "#000",
-              }}
-            >
-              From
-            </label>
-            <input
-              id="from"
-              className="form-control"
-              type="date"
-              ref={fromRef}
-              style={{
-                border: "1px solid #000",
-                borderRadius: "4px",
-                padding: "10px",
-                width: "100%",
-              }}
-            />
-          </div>
-          <div style={{ flex: 1 }}>
-            <label
-              className="form-label"
-              htmlFor="to"
-              style={{
-                display: "block",
-                marginBottom: "5px",
-                fontWeight: "bold",
-                color: "#000",
-              }}
-            >
-              To
-            </label>
-            <input
-              id="to"
-              className="form-control"
-              type="date"
-              ref={toRef}
-              style={{
-                border: "1px solid #000",
-                borderRadius: "4px",
-                padding: "10px",
-                width: "100%",
-              }}
-            />
-          </div>
-        </div>
+        <input
+          required
+          className="form-control"
+          type="text"
+          placeholder="YouTube Handle (@MrBeast)"
+          ref={handleRef}
+          style={{
+            border: "1px solid #000",
+            borderRadius: "4px",
+            padding: "8px",
+            flex: 2,
+            minWidth: "200px",
+          }}
+        />
+        <input
+          id="from"
+          className="form-control"
+          type="date"
+          ref={fromRef}
+          style={{
+            border: "1px solid #000",
+            borderRadius: "4px",
+            padding: "8px",
+            flex: 1,
+            minWidth: "150px",
+          }}
+        />
+        <input
+          id="to"
+          className="form-control"
+          type="date"
+          ref={toRef}
+          style={{
+            border: "1px solid #000",
+            borderRadius: "4px",
+            padding: "8px",
+            flex: 1,
+            minWidth: "150px",
+          }}
+        />
         <button
           className="btn btn-dark"
           style={{
-            display: "block",
-            width: "100%",
-            padding: "12px",
+            padding: "10px 15px",
             backgroundColor: "#000",
             color: "#fff",
             border: "none",
@@ -130,6 +103,7 @@ const ChannelForm = ({ onSubmit }: Props) => {
             textTransform: "uppercase",
             cursor: "pointer",
             transition: "background-color 0.3s ease",
+            minWidth: "120px",
           }}
           onMouseOver={(e) =>
             (e.currentTarget.style.backgroundColor = "#333")

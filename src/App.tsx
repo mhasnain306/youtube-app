@@ -1,12 +1,12 @@
 import OauthButton from "./components/OauthButton";
-import Thumbnail from "./components/Thumbnail";
+import ThumbnailContainer from "./components/ThumbnailContainer";
 
 function App() {
   return (
     <>
       <div className="d-flex p-3 justify-content-between">
         <div className="">
-          <Thumbnail />
+          <ThumbnailContainer />
         </div>
         <div className="">
           <div className="">

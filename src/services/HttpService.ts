@@ -1,11 +1,13 @@
 import axios from "axios";
 
+const controller = new AbortController();
 export const axiosInstance = axios.create({
     baseURL: "https://www.googleapis.com/youtube/v3",
     params: {
         key: "AIzaSyAxGGRfdnUpozj052bPxMabHrIM4dHwgLA",
         part: "snippet",
     },
+    signal: controller.signal
 });
 
 interface Params {
@@ -24,9 +26,7 @@ class HttpService<T> {
         return axiosInstance.get<T>(this.endpoint, { params });
     }
 
-    cancel = () => {
-
-    }
+    cancel = () => controller.abort();
 }
 
 export default HttpService;

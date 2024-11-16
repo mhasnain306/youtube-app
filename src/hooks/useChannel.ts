@@ -28,7 +28,11 @@ const useChannel = (channelHandle: string, onFetch: (id: string) => void) => {
     const [error, setError] = useState("");
     const [isLoading, setLoading] = useState(false);
     useEffect(() => {
-        if (!channelHandle) return;
+        if (!channelHandle) {
+            setData([]);
+            setError("");
+            return;
+        }
         setLoading(true);
         const httpClient = new HttpService<ChannelInfoResponseType>("/channels");
 
@@ -37,6 +41,7 @@ const useChannel = (channelHandle: string, onFetch: (id: string) => void) => {
             forHandle: channelHandle,
         }
         httpClient.get(params).then(res => {
+            setError("");
             setLoading(false);
             onFetch(res.data.items[0].contentDetails.relatedPlaylists.uploads);
             setData([...res.data.items])

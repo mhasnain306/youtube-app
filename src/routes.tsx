@@ -1,9 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
-import HomePage from "./pages/HomePage";
-import Oauth2 from "./pages/Oauth2";
-import Thumbnail from "./components/Thumbnail";
-import Layout from "./pages/Layout";
+import ThumbnailContainer from "./components/ThumbnailContainer";
 import About from "./pages/About";
+import HomePage from "./pages/HomePage";
+import Layout from "./pages/Layout";
+import OauthButton from "./components/OauthButton";
+import GoogleRedirect from "./components/GoogleRedirect";
+import Oauth2 from "./pages/GoogleSignIn";
+import GoogleSignIn from "./pages/GoogleSignIn";
 
 const router = createBrowserRouter([
   {
@@ -11,13 +14,21 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { index: true, element: <HomePage /> },
-      { path: "/thumbnail", element: <Thumbnail /> },
+      { path: "/thumbnail", element: <ThumbnailContainer /> },
       { path: "/about", element: <About /> },
     ],
   },
   {
-    path: "/oauth2",
-    element: <Oauth2 />,
+    path: "/oauth",
+    element: <OauthButton />,
+  },
+  {
+    path: "/signin",
+    element: <GoogleSignIn />,
+  },
+  {
+    path: "/google-redirect",
+    element: <GoogleRedirect />,
   },
 ]);
 

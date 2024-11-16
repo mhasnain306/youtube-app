@@ -34,30 +34,42 @@ const MAX_RESULTS = 50;
 const useVideos = (playlistId: string, queryData: InputsType) => {
     const [data, setData] = useState<VideoType[]>([]);
     const [error, setError] = useState<string | null>(null);
+    const [isLoading, setLoading] = useState(false);
 
+    const client = new HttpService<PlaylistItemsResultType>("/playlistItems");
+    const params: ParamsType = {
+        part: "snippet",
+        playlistId: playlistId,
+        maxResults: MAX_RESULTS
+    };
     useEffect(() => {
         const fetchVideos = async () => {
-            if (!playlistId) return;
-
-            const client = new HttpService<PlaylistItemsResultType>("/playlistItems");
-            const params: ParamsType = {
-                part: "snippet",
-                playlistId: playlistId,
-                maxResults: MAX_RESULTS
-            };
-
+            setLoading(true);
+            if (!playlistId) {
+                setData([]);
+                setError(null);
+                setLoading(false);
+                return;
+            }
+            setError(null);
             try {
+                console.log("in try of usevideos");
+
                 const results = await fetchAllVideos(client, params, queryData);
+
+                setLoading(false);
                 setData(results);
             } catch (err) {
+                setLoading(false);
                 setError(err instanceof Error ? err.message : "An unknown error occurred");
             }
         };
 
         fetchVideos();
+        // return () => client.cancel();
     }, [playlistId, queryData]);
 
-    return { data, error };
+    return { data, error, isLoading };
 };
 
 async function fetchAllVideos(client: HttpService<PlaylistItemsResultType>, params: ParamsType, queryData: InputsType): Promise<VideoType[]> {
@@ -73,14 +85,18 @@ async function fetchAllVideos(client: HttpService<PlaylistItemsResultType>, para
 
     do {
         const currentParams = nextPageToken ? { ...params, pageToken: nextPageToken } : params;
+        console.log(currentParams);
+
         const res = await client.get(currentParams);
         nextPageToken = res.data.nextPageToken;
 
         const { newResults, shouldStop } = filterVideosByDate(res.data.items, from, to);
+
         results = [...results, ...newResults];
 
-        if (shouldStop) break;
+        if (shouldStop || !nextPageToken) break;
     } while (nextPageToken);
+    // console.log(results);
 
     return results;
 }
@@ -89,9 +105,13 @@ function filterVideosByDate(items: VideoType[], from: Date, to: Date): { newResu
     const newResults: VideoType[] = [];
     let shouldStop = false;
 
+    console.log(items);
+
     for (const item of items) {
         const videoDate = new Date(item.snippet.publishedAt);
         if (videoDate >= from && videoDate <= to) {
+            // console.log(item);
+
             newResults.push(item);
         } else if (videoDate < from) {
             shouldStop = true;

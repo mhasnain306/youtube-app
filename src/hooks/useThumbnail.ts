@@ -1,6 +1,5 @@
-import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import getVideoId from "../services/getVideoId";
 import HttpService from "../services/HttpService";
 
 
@@ -22,47 +21,40 @@ interface ThumbnailResource {
     url: string;
 }
 
+const httpClient = new HttpService<Video>("/videos");
 const useThumbnail = (inputUrl: string) => {
     const [thumbnailData, setThumbnailData] = useState<ThumbnailResource[]>([]);
-    const [isLoading, setLoading] = useState(false);
-    const [error, setError] = useState("");
     const [selectedUrl, setSelectedUrl] = useState("");
+    let thumbnailUrls: ThumbnailResource[] = [];
 
-    const httpClient = new HttpService<Video>("/videos");
 
+    const { data, error, isLoading } = useQuery({
+        queryKey: [{ videoId: inputUrl }],
+        queryFn: () => {
+            const params = {
+                id: inputUrl
+            }
+            console.log(params);
+
+            return httpClient.get(params).then(res => res.data);
+        },
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
+    });
     useEffect(() => {
-
-        const id = getVideoId(inputUrl);
-        if (id) fetchthumbnail(id);
-        else setError("Invalid URL");
-    }, [inputUrl]);
-
-    const fetchthumbnail = (id: string) => {
-        setSelectedUrl("");
-        setLoading(true);
-        const params = {
-            id: id
-        }
-        httpClient.get(params).then(res => {
-            let thumbnailUrls: ThumbnailResource[] = [];
-            if (res.data.items[0]) {
-                const thumbnails = res.data.items[0].snippet.thumbnails;
-                for (const key in thumbnails) {
-                    thumbnailUrls.push({ type: key, url: thumbnails[key].url })
-                }
-
-                setError("")
-            } else {
-                setError("No video found");
+        if (data?.items[0]) {
+            const thumbnails = data.items[0].snippet.thumbnails;
+            for (const key in thumbnails) {
+                thumbnailUrls.push({ type: key, url: thumbnails[key].url })
             }
             setThumbnailData(thumbnailUrls);
-            setLoading(false);
-        }).catch(err => {
-            console.log(err);
-            setError(err);
+        }
+        return () => {
+            setThumbnailData([]);
+            setSelectedUrl("");
+        }
+    }, [data])
 
-        });
-    };
 
     return {
         thumbnailData,

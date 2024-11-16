@@ -8,6 +8,7 @@ import {
   AlertIcon,
 } from "@chakra-ui/react";
 import useChannel from "../hooks/useChannel";
+import Expandable from "./Expandable";
 
 interface Props {
   channelHandle: string;
@@ -20,7 +21,7 @@ const ChannelData = ({ channelHandle = "", onFetch }: Props) => {
     onFetch
   );
 
-  if (!channelHandle) return null;
+  // if (!channelHandle) return null;
 
   if (isLoading) return <Spinner size="lg" color="white" />;
 
@@ -65,7 +66,9 @@ const ChannelData = ({ channelHandle = "", onFetch }: Props) => {
             </Box>
           </HStack>
           <Box paddingTop={2}>
-            <Text>{data ? data[0].snippet.description : ""}</Text>
+            <Expandable>
+              {data ? data[0].snippet.description : ""}
+            </Expandable>
           </Box>
         </Box>
       )}
