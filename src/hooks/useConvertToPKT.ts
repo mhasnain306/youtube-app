@@ -12,7 +12,7 @@ function useConvertToPKT(utcTimestamp: string) {
             const utcDate = new Date(utcTimestamp);
 
             // Convert the Date object to PKT (UTC + 5 hours)
-            const options = { timeZone: 'Asia/Karachi', hour12: true };
+            // const options = { timeZone: 'Asia/Karachi', hour12: true };
 
             // Format the year, month, date
             const year = utcDate.toLocaleString('en-GB', { timeZone: 'Asia/Karachi', year: 'numeric' });

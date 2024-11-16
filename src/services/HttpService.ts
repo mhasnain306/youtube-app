@@ -4,7 +4,7 @@ const controller = new AbortController();
 export const axiosInstance = axios.create({
     baseURL: "https://www.googleapis.com/youtube/v3",
     params: {
-        key: "AIzaSyAxGGRfdnUpozj052bPxMabHrIM4dHwgLA",
+        key: "AIzaSyAMbdK3aEELtRuszeJjOUBnoVnSXu01k5M",
         part: "snippet",
     },
     signal: controller.signal

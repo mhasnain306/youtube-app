@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import YouTube from "react-youtube";
 import "./VideoModal.css"; // Optional for styling
 

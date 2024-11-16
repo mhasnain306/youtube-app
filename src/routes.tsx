@@ -5,7 +5,6 @@ import HomePage from "./pages/HomePage";
 import Layout from "./pages/Layout";
 import OauthButton from "./components/OauthButton";
 import GoogleRedirect from "./components/GoogleRedirect";
-import Oauth2 from "./pages/GoogleSignIn";
 import GoogleSignIn from "./pages/GoogleSignIn";
 
 const router = createBrowserRouter([

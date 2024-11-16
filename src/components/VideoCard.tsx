@@ -10,7 +10,7 @@ interface Props {
   videoData: VideoCardType;
 }
 const VideoCard = ({ videoData }: Props) => {
-  const { date, year, month, time } = useConvertToPKT(
+  const { date, year, month } = useConvertToPKT(
     videoData.publishedAt
   );
   return (
